@@ -1,3 +1,38 @@
 {
-	"tittle": "AWESOME"
+	"tittle": "Title",
+	"user": {
+		"user": "User",
+		"email": "Email"
+	},
+	"general": {
+		"sign": {
+			"full": "Sign in",
+			"short": "Sign",
+			"description": "Sign in to your account"
+		},
+		"placeholder": {
+			"email": "Email",
+			"email-user": "Email or username",
+			"password": "Password"
+		},
+		"login": {
+			"full": "Login",
+			"short": "Login",
+			"description": "Login to your account"
+		},
+		"create": {
+			"account": "Create account"
+		},
+		"required": {
+			"email": "Email is required",
+			"password": "Password is required"
+		},
+		"miss": {
+			"email": "Did you miss your email?",
+			"password": "Did you miss your password?"
+		},
+		"easter-egg": {
+			"egg": "Maybe more?"
+		}
+	}
 }

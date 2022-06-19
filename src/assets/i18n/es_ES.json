@@ -1,3 +1,7 @@
 {
-	"tittle": "AWESOME"
+	"tittle": "Titulo",
+	"user": {
+		"login": "Iniciar sesion",
+		"register": "Registrarse"
+	}
 }

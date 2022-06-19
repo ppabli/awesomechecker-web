@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login/login.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -18,6 +17,20 @@ import { SidenavService } from './sidenav.service';
 import { FooterComponent } from './footer/footer.component';
 import { DefaultPageComponent } from './default-page/default-page.component';
 import { MatButtonModule } from '@angular/material/button';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { DefaultLayoutComponent } from './default-layout/default-layout.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { BorderDividerComponent } from './border-divider/border-divider.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -26,13 +39,16 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
 	declarations: [
 		AppComponent,
-		LoginComponent,
-  SidenavMenuComponent,
-  ToolbarComponent,
-  FooterComponent,
-  DefaultPageComponent
+		SidenavMenuComponent,
+		ToolbarComponent,
+		FooterComponent,
+		DefaultPageComponent,
+		LoginPageComponent,
+		DefaultLayoutComponent,
+		BorderDividerComponent
 	],
 	imports: [
+		ReactiveFormsModule,
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
@@ -41,7 +57,17 @@ export function HttpLoaderFactory(http: HttpClient) {
 		MatSidenavModule,
 		MatButtonModule,
 		MatIconModule,
+		MatCardModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatGridListModule,
+		MatListModule,
+		MatDividerModule,
 		HttpClientModule,
+		MatProgressBarModule,
+		MatProgressSpinnerModule,
+		MatStepperModule,
+		MatSnackBarModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { BorderDividerComponent } from './border-divider.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('BorderDividerComponent', () => {
+  let component: BorderDividerComponent;
+  let fixture: ComponentFixture<BorderDividerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ BorderDividerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(BorderDividerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

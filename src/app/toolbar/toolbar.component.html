@@ -1,9 +1,16 @@
-<mat-toolbar color='primary'>
+<mat-toolbar>
 
 	<mat-toolbar-row>
 
 		<button mat-icon-button (click)='toggleSidenav()'>
 			<mat-icon>menu</mat-icon>
+		</button>
+
+		<span class="spacer"></span>
+
+		<button mat-stroked-button routerLink="/login" stroked *ngIf="!isLogin">
+			<mat-icon>account_circle</mat-icon>
+			<span>{{ 'user.sign.full' | translate }}</span>
 		</button>
 
 	</mat-toolbar-row>
