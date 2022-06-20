@@ -34,7 +34,7 @@ export class LocaleService {
 	public setPreferedLocale(locale: string): void {
 		this.preferedLocale = locale;
 		this.localStorage.setItem('preferedLocale', locale);
-		this.translate.use(locale);
+		this.translate.setDefaultLang(locale);
 	}
 
 	public getTranslateService(): TranslateService {

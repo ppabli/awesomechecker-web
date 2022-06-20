@@ -3,15 +3,33 @@
 	<mat-toolbar-row>
 
 		<button mat-icon-button (click)='toggleSidenav()'>
-			<mat-icon>menu</mat-icon>
+			<mat-icon color="accent">menu</mat-icon>
 		</button>
 
 		<span class="spacer"></span>
 
-		<button mat-stroked-button routerLink="/login" stroked *ngIf="!isLogin">
-			<mat-icon>account_circle</mat-icon>
-			<span>{{ 'user.sign.full' | translate }}</span>
+		<button mat-stroked-button routerLink="/login" *ngIf="!isLogin">
+			<mat-icon color="accent">account_circle</mat-icon>
+			<span>{{ 'general.sign.full' | translate }}</span>
 		</button>
+
+		<mat-form-field class="correct-font margin6" *ngIf="isLogin" color="accent">
+			<mat-select [(value)]="selectedTeamString" id="team" #team (selectionChange)="changeTeam(team.value)">
+				<mat-option *ngFor="let team of teams" [value]="team.name">
+					{{team.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<button mat-stroked-button *ngIf="isLogin" [matMenuTriggerFor]="userMenu">
+			<mat-icon color="accent">account_circle</mat-icon>
+			<span>{{ user.user }}</span>
+		</button>
+
+		<mat-menu #userMenu="matMenu">
+			<button mat-menu-item [routerLink]="['./editUser/', user.id]">{{ 'general.edit.short' | translate}}</button>
+			<button mat-menu-item (click)="logout()">{{ 'general.logout.short' | translate}}</button>
+		</mat-menu>
 
 	</mat-toolbar-row>
 

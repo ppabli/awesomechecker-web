@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import { SidenavService } from './../sidenav.service';
 
 @Component({
-  selector: 'app-default-layout',
-  templateUrl: './default-layout.component.html',
-  styleUrls: ['./default-layout.component.scss']
+	selector: 'app-default-layout',
+	templateUrl: './default-layout.component.html',
+	styleUrls: ['./default-layout.component.scss']
 })
-export class DefaultLayoutComponent implements OnInit {
+export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+	@ViewChild('sidenav') public sidenav: MatSidenav;
 
-  ngOnInit(): void {
-  }
+	constructor(private sidenavService: SidenavService) { }
+
+	ngOnInit(): void {
+
+
+	}
+
+	ngAfterViewInit(): void {
+		this.sidenavService.setSidenav(this.sidenav);
+	}
 
 }

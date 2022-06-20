@@ -1,0 +1,21 @@
+<div class="row">
+
+	<mat-form-field class="correct correct-font" appearance="outline" *ngIf="visibleComponents['locale']" color="accent">
+		<mat-label>{{ 'general.placeholder.locale' | translate }}</mat-label>
+		<mat-select [(value)]="optionSelected" id="locale" #locale (selectionChange)="changeLocale(locale.value)">
+			<mat-option *ngFor="let option of options" [value]="option">
+				{{option}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<button *ngIf="visibleComponents['api']" mat-stroked-button class="margin6" type="button" routerLink="/api">{{
+		'general.api.short' | translate }}</button>
+	<button *ngIf="visibleComponents['help']" mat-stroked-button class="margin6" type="button" routerLink="/help">{{
+		'general.help.short' | translate }}</button>
+	<button *ngIf="visibleComponents['terms']" mat-stroked-button class="margin6" type="button" routerLink="/terms">{{
+		'general.terms.short' | translate }}</button>
+	<button *ngIf="visibleComponents['privacy']" mat-stroked-button class="margin6" type="button"
+		routerLink="/privacy">{{ 'general.privacy.short' | translate }}</button>
+
+</div>

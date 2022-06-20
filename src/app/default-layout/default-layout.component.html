@@ -1,18 +1,16 @@
-<mat-sidenav-container fullscreen>
+<app-toolbar></app-toolbar>
 
-	<mat-sidenav #sidenav class="bg-white">
+<mat-sidenav-container>
+
+	<mat-sidenav #sidenav mode="side" opened>
 
 		<app-sidenav-menu></app-sidenav-menu>
 
 	</mat-sidenav>
 
-	<mat-sidenav-content class="bg-white">
-
-		<app-toolbar></app-toolbar>
+	<mat-sidenav-content>
 
 		<router-outlet></router-outlet>
-
-		<app-footer></app-footer>
 
 	</mat-sidenav-content>
 

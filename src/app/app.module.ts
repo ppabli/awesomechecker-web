@@ -14,7 +14,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavService } from './sidenav.service';
-import { FooterComponent } from './footer/footer.component';
 import { DefaultPageComponent } from './default-page/default-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -31,6 +30,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { FooterContentComponent } from './footer-content/footer-content.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,11 +45,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 		AppComponent,
 		SidenavMenuComponent,
 		ToolbarComponent,
-		FooterComponent,
 		DefaultPageComponent,
 		LoginPageComponent,
 		DefaultLayoutComponent,
-		BorderDividerComponent
+		BorderDividerComponent,
+  FooterContentComponent,
+  ErrorPageComponent
 	],
 	imports: [
 		ReactiveFormsModule,
@@ -68,6 +73,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		MatProgressSpinnerModule,
 		MatStepperModule,
 		MatSnackBarModule,
+		MatSelectModule,
+		MatCheckboxModule,
+		MatMenuModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

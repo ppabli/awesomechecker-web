@@ -1,9 +1,9 @@
-<div class="center-div">
+<div class="center-div row">
 
 	<mat-card>
 
-		<mat-card-title class="center-content">{{ 'general.login.full' | translate }}</mat-card-title>
-		<mat-card-subtitle class="center-content">{{ 'general.login.description' | translate }}</mat-card-subtitle>
+		<mat-card-title class="row">{{ 'general.login.full' | translate }}</mat-card-title>
+		<mat-card-subtitle class="row">{{ 'general.login.description' | translate }}</mat-card-subtitle>
 
 		<mat-card-content>
 
@@ -11,7 +11,7 @@
 
 				<mat-form-field appearance="outline" color="accent">
 					<mat-label>{{ 'general.placeholder.email-user' | translate }}</mat-label>
-					<input matInput type="text" required
+					<input autocomplete="username" matInput type="text" required
 						placeholder="{{ 'general.placeholder.email-user' | translate }}" id="user"
 						formControlName="user" #user>
 					<button type="button" mat-icon-button matSuffix (click)="openSnack()">
@@ -21,7 +21,7 @@
 
 				<mat-form-field appearance="outline" color="accent">
 					<mat-label>{{ 'general.placeholder.password' | translate }}</mat-label>
-					<input matInput [type]="hidePass ? 'password' : 'text'" required
+					<input autocomplete="password" matInput [type]="hidePass ? 'password' : 'text'" required
 						placeholder="{{ 'general.placeholder.password' | translate }}" id="password" #password
 						formControlName="password">
 					<button type="button" mat-icon-button matSuffix (click)="hidePass = !hidePass"
@@ -38,7 +38,32 @@
 
 			</form>
 
+			<app-border-divider [marginTopSize]="18" [marginBottomSize]="8"></app-border-divider>
+
+			<div class="row">
+
+				<button mat-stroked-button class="margin6" type="button" routerLink="/forgotEmail">{{ 'general.miss.email' | translate }}</button>
+				<button mat-stroked-button class="margin6" type="button" routerLink="/forgotPassword">{{ 'general.miss.password' | translate }}</button>
+
+			</div>
+
+			<app-border-divider [marginTopSize]="8" [marginBottomSize]="16"></app-border-divider>
+
+			<div class="row">
+
+				<button mat-stroked-button class="margin6" type="button" routerLink="/forgotPassword">{{ 'general.create.account' | translate }}</button>
+
+			</div>
+
 		</mat-card-content>
+
+		<app-border-divider></app-border-divider>
+
+		<mat-card-footer>
+
+			<app-footer-content [visibleComponents]="visibleComponents"></app-footer-content>
+
+		</mat-card-footer>
 
 	</mat-card>
 

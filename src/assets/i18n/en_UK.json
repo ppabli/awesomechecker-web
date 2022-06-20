@@ -5,6 +5,24 @@
 		"email": "Email"
 	},
 	"general": {
+		"api": {
+			"short": "API"
+		},
+		"terms": {
+			"short": "Terms"
+		},
+		"privacy": {
+			"short": "Privacy"
+		},
+		"help": {
+			"short": "Help"
+		},
+		"contact": {
+			"short": "Contact"
+		},
+		"about": {
+			"short": "About"
+		},
 		"sign": {
 			"full": "Sign in",
 			"short": "Sign",
@@ -13,7 +31,8 @@
 		"placeholder": {
 			"email": "Email",
 			"email-user": "Email or username",
-			"password": "Password"
+			"password": "Password",
+			"locale": "Select your language"
 		},
 		"login": {
 			"full": "Login",
@@ -33,6 +52,16 @@
 		},
 		"easter-egg": {
 			"egg": "Maybe more?"
+		},
+		"logout": {
+			"full": "Logout",
+			"short": "Logout",
+			"description": "Logout from your account"
+		},
+		"edit": {
+			"full": "Edit",
+			"short": "Edit",
+			"description": "Edit your account"
 		}
 	}
 }

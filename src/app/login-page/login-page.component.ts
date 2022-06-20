@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../user.service';
 
 @Component({
 	selector: 'app-login-page',
@@ -16,7 +17,14 @@ export class LoginPageComponent implements OnInit {
 
 	loginForm: FormGroup;
 
-	constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private translate: TranslateService) { }
+	visibleComponents = {
+		'help': true,
+		'terms': true,
+		'privacy': true,
+		'locale': true,
+	}
+
+	constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private translate: TranslateService, private userService: UserService) { }
 
 	ngOnInit(): void {
 		this.loginForm = new FormGroup({
@@ -26,13 +34,17 @@ export class LoginPageComponent implements OnInit {
 	}
 
 	login(form: any) {
-		console.log(form);
+		this.userService.login(form);
 	}
 
 	openSnack() {
+
 		this.translate.get('general.easter-egg.egg').subscribe(res => {
-			this.snackBar.open(res);
+			this.snackBar.open(res, '', {
+				duration: 1500,
+			});
 		});
+
 	}
 
 }

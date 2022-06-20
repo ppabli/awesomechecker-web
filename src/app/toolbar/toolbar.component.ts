@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { SidenavService } from '../sidenav.service';
+import { Team } from '../team.model';
+import { User } from '../user.model';
 import { UserService } from '../user.service';
 
 @Component({
@@ -11,9 +13,30 @@ import { UserService } from '../user.service';
 export class ToolbarComponent implements OnInit {
 
 	protected isLogin: boolean;
+	protected user: User;
 
-	constructor(private sidenav: SidenavService, private user: UserService) {
-		this.user.isLogin.subscribe(isLogin => this.isLogin = isLogin);
+	teams: Team[]
+	selectedTeam: Team;
+	selectedTeamString: string
+
+	constructor(private sidenav: SidenavService, private userService: UserService) {
+		this.userService.isLogin.subscribe(isLogin => this.isLogin = isLogin);
+		this.userService.user.subscribe(user => {
+			if (user) {
+				this.user = user;
+			}
+		});
+		this.userService.teams.subscribe(teams => {
+			if (teams) {
+				this.teams = teams;
+			}
+		});
+		this.userService.activeTeam.subscribe(team => {
+			if (team) {
+				this.selectedTeam = team;
+				this.selectedTeamString = team.name;
+			}
+		});
 	}
 
 	ngOnInit(): void {
@@ -21,6 +44,14 @@ export class ToolbarComponent implements OnInit {
 
 	toggleSidenav() {
 		this.sidenav.toggle();
+	}
+
+	logout() {
+		this.userService.logout();
+	}
+
+	changeTeam(team: string) {
+
 	}
 
 }
