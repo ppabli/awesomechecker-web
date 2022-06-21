@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
 	selector: 'app-sidenav-menu',
@@ -7,9 +8,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidenavMenuComponent implements OnInit {
 
-	constructor() { }
+	links = [
+		{
+			name: 'Home',
+			path: '/',
+			icon: 'home',
+		},
+		{
+			name: 'About',
+			path: '/about',
+			icon: 'info',
+		},
+		{
+			name: 'Products',
+			path: '/products',
+			icon: 'waves',
+			required: {
+				isLogin: true
+			}
+		}
+	];
+
+	isLogin: boolean;
+
+	constructor(private userService: UserService) {
+		this.userService.isLogin.subscribe(isLogin => {
+			this.isLogin = isLogin;
+		});
+	}
+
+	visible(link: any): boolean {
+		let isVisible = true;
+		if (link.required) {
+			isVisible = isVisible && link.required.isLogin === this.isLogin;
+		}
+		return isVisible;
+	}
 
 	ngOnInit(): void {
+
 	}
 
 }

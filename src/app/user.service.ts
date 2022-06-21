@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
+import { LocalStorageService } from './local-storage.service';
 import { Team } from './team.model';
 import { User } from './user.model';
 
@@ -24,9 +25,25 @@ export class UserService {
 	private _activeTeam: Team | null = null;
 	activeTeam = new BehaviorSubject<Team | null>(this._activeTeam);
 
-	constructor(private apiService: ApiService, private snackBar: MatSnackBar, private router: Router) {
+	constructor(private apiService: ApiService, private localStorageService: LocalStorageService, private snackBar: MatSnackBar, private router: Router) {
 
-		this.isLogin.next(false);
+	}
+
+	alreadyLogin() {
+
+		let token = this.localStorageService.getItem('token');
+
+		if (token) {
+
+			this.isLogin.next(true);
+
+			let temp = this.apiService.getDecodedAccessToken(token);
+
+			this.user.next(temp.user);
+			this.teams.next(temp.user.teams);
+			this.activeTeam.next(temp.user.teams[0]);
+
+		}
 
 	}
 
@@ -38,13 +55,18 @@ export class UserService {
 		this.activeTeam.next(null);
 		this.user.next(null);
 
+		this.localStorageService.removeItem('token');
+
 		this.snackBar.open('Session done!', '', {
 			duration: 1500,
 		});
 
+		this.router.navigate(['/']);
+
 	}
 
 	login(formData: any) {
+
 		this.apiService.post('/login', formData).subscribe({
 			next: (res) => {
 
@@ -60,7 +82,10 @@ export class UserService {
 					duration: 1500,
 				});
 
+				this.localStorageService.setItem('token', res.token);
+
 				this.router.navigate(['/']);
+
 			},
 			error: (err) => {
 

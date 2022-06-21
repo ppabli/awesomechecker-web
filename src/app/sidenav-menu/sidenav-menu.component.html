@@ -1,1 +1,10 @@
-<button mat-button>User</button>
+<mat-nav-list>
+	<ng-container *ngFor="let link of links">
+		<mat-list-item [routerLink]="link.path" *ngIf="visible(link)">
+			<a matLine>{{ link.name }}</a>
+			<button mat-icon-button>
+				<mat-icon>{{ link.icon }}</mat-icon>
+			</button>
+		</mat-list-item>
+	</ng-container>
+</mat-nav-list>

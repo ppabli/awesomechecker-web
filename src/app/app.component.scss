@@ -11,10 +11,12 @@
 }
 
 .margin {
+	&4 {
+		margin: 4px;
+	}
 	&6 {
 		margin: 6px;
 	}
-
 	&8 {
 		margin: 8px;
 	}

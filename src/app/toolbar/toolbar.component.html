@@ -21,15 +21,19 @@
 			</mat-select>
 		</mat-form-field>
 
-		<button mat-stroked-button *ngIf="isLogin" [matMenuTriggerFor]="userMenu">
-			<mat-icon color="accent">account_circle</mat-icon>
-			<span>{{ user.user }}</span>
-		</button>
+		<ng-container *ngIf="isLogin">
 
-		<mat-menu #userMenu="matMenu">
-			<button mat-menu-item [routerLink]="['./editUser/', user.id]">{{ 'general.edit.short' | translate}}</button>
-			<button mat-menu-item (click)="logout()">{{ 'general.logout.short' | translate}}</button>
-		</mat-menu>
+			<button mat-stroked-button [matMenuTriggerFor]="userMenu">
+				<mat-icon color="accent">account_circle</mat-icon>
+				<span>{{ user.user }}</span>
+			</button>
+
+			<mat-menu #userMenu="matMenu">
+				<button mat-menu-item [routerLink]="['./editUser/', user.id]">{{ 'general.edit.short' | translate}}</button>
+				<button mat-menu-item (click)="logout()">{{ 'general.logout.short' | translate}}</button>
+			</mat-menu>
+
+		</ng-container>
 
 	</mat-toolbar-row>
 

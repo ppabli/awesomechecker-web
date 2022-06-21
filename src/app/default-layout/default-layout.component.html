@@ -1,14 +1,14 @@
-<app-toolbar></app-toolbar>
+<mat-sidenav-container fullscreen>
 
-<mat-sidenav-container>
-
-	<mat-sidenav #sidenav mode="side" opened>
+	<mat-sidenav #sidenav mode="side">
 
 		<app-sidenav-menu></app-sidenav-menu>
 
 	</mat-sidenav>
 
 	<mat-sidenav-content>
+
+		<app-toolbar></app-toolbar>
 
 		<router-outlet></router-outlet>
 

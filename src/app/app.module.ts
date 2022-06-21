@@ -35,6 +35,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { FooterContentComponent } from './footer-content/footer-content.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ProductsPageComponent } from './products-page/products-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,8 +50,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		LoginPageComponent,
 		DefaultLayoutComponent,
 		BorderDividerComponent,
-  FooterContentComponent,
-  ErrorPageComponent
+		FooterContentComponent,
+		ErrorPageComponent,
+  ProductsPageComponent,
 	],
 	imports: [
 		ReactiveFormsModule,

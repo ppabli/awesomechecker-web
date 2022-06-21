@@ -4,10 +4,13 @@ import { DefaultLayoutComponent } from './default-layout/default-layout.componen
 import { DefaultPageComponent } from './default-page/default-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { ProductsPageComponent } from './products-page/products-page.component';
+import { RequiredLoginGuard } from './required-login.guard';
 
 const routes: Routes = [
 	{
 		path: '', component: DefaultLayoutComponent, children: [
+			{ path: 'products', component: ProductsPageComponent, canActivate: [RequiredLoginGuard] },
 			{ path: '', component: DefaultPageComponent },
 		]
 	},
