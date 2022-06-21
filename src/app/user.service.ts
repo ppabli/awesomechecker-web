@@ -29,6 +29,11 @@ export class UserService {
 
 	}
 
+	changeTeam(team: Team) {
+		this.activeTeam.next(team);
+		this.localStorageService.setItem('activeTeam', team.name);
+	}
+
 	alreadyLogin() {
 
 		let token = this.localStorageService.getItem('token');
@@ -41,7 +46,10 @@ export class UserService {
 
 			this.user.next(temp.user);
 			this.teams.next(temp.user.teams);
-			this.activeTeam.next(temp.user.teams[0]);
+			let localStorageTeamName = this.localStorageService.getItem('activeTeam');
+
+			let team = this.teams.value.find(t => t.name === localStorageTeamName);
+			this.activeTeam.next(team || temp.user.teams[0]);
 
 		}
 
@@ -68,7 +76,7 @@ export class UserService {
 	login(formData: any) {
 
 		this.apiService.post('/login', formData).subscribe({
-			next: (res) => {
+			next: (res: any) => {
 
 				let temp = this.apiService.getDecodedAccessToken(res.token);
 
@@ -86,21 +94,9 @@ export class UserService {
 
 				this.router.navigate(['/']);
 
-			},
-			error: (err) => {
-
-				this.isLogin.next(false);
-
-				this.teams.next([]);
-				this.activeTeam.next(null);
-				this.user.next(null);
-
-				this.snackBar.open('Login failed', '', {
-					duration: 1500,
-				});
-
 			}
-		});
+		})
+
 	}
 
 }

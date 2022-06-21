@@ -11,11 +11,10 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('sidenav') public sidenav: MatSidenav;
 
-	constructor(private sidenavService: SidenavService) { }
+	constructor(private sidenavService: SidenavService) {
+	}
 
 	ngOnInit(): void {
-
-
 	}
 
 	ngAfterViewInit(): void {

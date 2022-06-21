@@ -13,9 +13,9 @@
 			<span>{{ 'general.sign.full' | translate }}</span>
 		</button>
 
-		<mat-form-field class="correct-font margin6" *ngIf="isLogin" color="accent">
-			<mat-select [(value)]="selectedTeamString" id="team" #team (selectionChange)="changeTeam(team.value)">
-				<mat-option *ngFor="let team of teams" [value]="team.name">
+		<mat-form-field class="correct-font margin6" *ngIf="isLogin" color="accent" appearance="standard">
+			<mat-select [(value)]="selectedTeam" id="team" #team (selectionChange)="changeTeam(team.value)">
+				<mat-option *ngFor="let team of teams" [value]="team">
 					{{team.name}}
 				</mat-option>
 			</mat-select>
@@ -29,7 +29,8 @@
 			</button>
 
 			<mat-menu #userMenu="matMenu">
-				<button mat-menu-item [routerLink]="['./editUser/', user.id]">{{ 'general.edit.short' | translate}}</button>
+				<button mat-menu-item [routerLink]="['./editUser/', user.id]">{{ 'general.edit.short'
+					| translate}}</button>
 				<button mat-menu-item (click)="logout()">{{ 'general.logout.short' | translate}}</button>
 			</mat-menu>
 

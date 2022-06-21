@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '../local-storage.service';
 import { SidenavService } from '../sidenav.service';
 import { Team } from '../team.model';
 import { User } from '../user.model';
@@ -17,7 +18,6 @@ export class ToolbarComponent implements OnInit {
 
 	teams: Team[]
 	selectedTeam: Team;
-	selectedTeamString: string
 
 	constructor(private sidenav: SidenavService, private userService: UserService) {
 		this.userService.isLogin.subscribe(isLogin => this.isLogin = isLogin);
@@ -34,7 +34,6 @@ export class ToolbarComponent implements OnInit {
 		this.userService.activeTeam.subscribe(team => {
 			if (team) {
 				this.selectedTeam = team;
-				this.selectedTeamString = team.name;
 			}
 		});
 	}
@@ -50,8 +49,8 @@ export class ToolbarComponent implements OnInit {
 		this.userService.logout();
 	}
 
-	changeTeam(team: string) {
-
+	changeTeam(team: Team) {
+		this.userService.changeTeam(team);
 	}
 
 }

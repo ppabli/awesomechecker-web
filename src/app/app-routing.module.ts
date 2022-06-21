@@ -10,8 +10,8 @@ import { RequiredLoginGuard } from './required-login.guard';
 const routes: Routes = [
 	{
 		path: '', component: DefaultLayoutComponent, children: [
-			{ path: 'products', component: ProductsPageComponent, canActivate: [RequiredLoginGuard] },
 			{ path: '', component: DefaultPageComponent },
+			{ path: 'products', component: ProductsPageComponent, canActivate: [RequiredLoginGuard] }
 		]
 	},
 	{ path: 'login', component: LoginPageComponent, pathMatch: 'full' },

@@ -1,0 +1,25 @@
+<div class="row justify-start">
+
+	<button mat-button (click)="changeFormat('table')">
+
+		<mat-icon mat-icon [color]="format == 'table' ? 'accent' : ''"> table_chart</mat-icon>
+
+	</button>
+
+	<button mat-button (click)="changeFormat('card')">
+
+		<mat-icon mat-icon [color]="format == 'card' ? 'accent' : ''">dashboard</mat-icon>
+
+	</button>
+
+	<mat-form-field class="example-full-width" appearance="standard" color="accent">
+		<input matInput [value]="searchText" (keyup)="changeSearchValue($event)" placeholder="Search">
+		<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+	</mat-form-field>
+
+	<span class="spacer"></span>
+
+	<mat-paginator class="bg-grey" [length]="dataLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizes"
+		color="accent" aria-label="Select page"></mat-paginator>
+
+</div>
