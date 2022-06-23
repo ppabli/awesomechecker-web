@@ -2,7 +2,7 @@
 
 	<button mat-button (click)="changeFormat('table')">
 
-		<mat-icon mat-icon [color]="format == 'table' ? 'accent' : ''"> table_chart</mat-icon>
+		<mat-icon mat-icon [color]="format == 'table' ? 'accent' : ''">table_chart</mat-icon>
 
 	</button>
 
@@ -21,5 +21,11 @@
 
 	<mat-paginator class="bg-grey" [length]="dataLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizes"
 		color="accent" aria-label="Select page"></mat-paginator>
+
+	<button mat-button *ngIf="canCreate">
+
+		<mat-icon mat-icon color="accent" routerLink="/products/create">add</mat-icon>
+
+	</button>
 
 </div>

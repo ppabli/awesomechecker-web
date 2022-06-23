@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from '../api.service';
 import { CustomBarService } from '../custom-bar.service';
 import { Product } from '../product.model';
+import { UserService } from '../user.service';
 
 @Component({
 	selector: 'app-products-page',
@@ -23,16 +24,23 @@ export class ProductsPageComponent implements OnInit {
 	displayedColumns: string[] = ['id', 'name', 'createdTimestamp','lastUpdateTimestamp'];
 	dataSource = new MatTableDataSource(this.products);
 
-	constructor(private apiService: ApiService, private customBarService: CustomBarService) {
+	constructor(private apiService: ApiService, private customBarService: CustomBarService, private userService: UserService) {
 		this.customBarService.format.subscribe(newFormat => this.format = newFormat);
 		this.customBarService.searchValue.subscribe(newText => {
 			this.searchText = newText;
 			this.changeSort();
 		})
+		this.userService.activeTeam.subscribe(newTeam => {
+			this.loadData();
+		})
 		this.apiService.loading.subscribe(loading => this.loading = loading);
 	}
 
 	ngOnInit() {
+		this.loadData();
+	}
+
+	private loadData() {
 		this.apiService.loading.next(true);
 		this.apiService.get('/products').subscribe({
 			next: (res: any) => {

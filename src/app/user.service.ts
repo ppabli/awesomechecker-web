@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
+import { Rol } from './rol.model';
+import { SidenavService } from './sidenav.service';
 import { Team } from './team.model';
 import { User } from './user.model';
 
@@ -25,12 +26,21 @@ export class UserService {
 	private _activeTeam: Team | null = null;
 	activeTeam = new BehaviorSubject<Team | null>(this._activeTeam);
 
-	constructor(private apiService: ApiService, private localStorageService: LocalStorageService, private snackBar: MatSnackBar, private router: Router) {
+	private _roles: Rol[] = [];
+	roles = new BehaviorSubject<Rol[]>(this._roles);
+
+	private _activeRoles: Rol[] = [];
+	activeRoles = new BehaviorSubject<Rol[]>(this._activeRoles);
+
+	constructor(private apiService: ApiService, private localStorageService: LocalStorageService, private snackBar: MatSnackBar, private router: Router, private sideBar: SidenavService) {
 
 	}
 
 	changeTeam(team: Team) {
 		this.activeTeam.next(team);
+		this.activeRoles.next(this.roles.value.filter((rol: Rol) => {
+			return rol.teamId == team.id;
+		}))
 		this.localStorageService.setItem('activeTeam', team.name);
 	}
 
@@ -40,16 +50,28 @@ export class UserService {
 
 		if (token) {
 
-			this.isLogin.next(true);
-
 			let temp = this.apiService.getDecodedAccessToken(token);
 
+			let now = new Date();
+			if (now > temp.expires) {
+				return this.logout();
+			}
+
+			this.isLogin.next(true);
+
 			this.user.next(temp.user);
-			this.teams.next(temp.user.teams);
+			this.teams.next(temp.user.teams.map((team: any) => new Team(team)));
+			this.roles.next(temp.user.roles.map((rol: any) => new Rol(rol)));
+
 			let localStorageTeamName = this.localStorageService.getItem('activeTeam');
 
-			let team = this.teams.value.find(t => t.name === localStorageTeamName);
-			this.activeTeam.next(team || temp.user.teams[0]);
+			let team = this.teams.value.find(t => t.name == localStorageTeamName);
+			let activeTeam = team || temp.user.teams[0];
+			this.activeTeam.next(activeTeam);
+
+			this.activeRoles.next(this.roles.value.filter((rol: Rol) => {
+				return rol.teamId == activeTeam.id;
+			}))
 
 		}
 
@@ -61,6 +83,10 @@ export class UserService {
 
 		this.teams.next([]);
 		this.activeTeam.next(null);
+
+		this.roles.next([]);
+		this.activeRoles.next([]);
+
 		this.user.next(null);
 
 		this.localStorageService.removeItem('token');
@@ -68,6 +94,8 @@ export class UserService {
 		this.snackBar.open('Session done!', '', {
 			duration: 1500,
 		});
+
+		this.sideBar.close();
 
 		this.router.navigate(['/']);
 
@@ -81,8 +109,13 @@ export class UserService {
 				let temp = this.apiService.getDecodedAccessToken(res.token);
 
 				this.user.next(temp.user);
-				this.teams.next(temp.user.teams);
-				this.activeTeam.next(temp.user.teams[0]);
+				this.teams.next(temp.user.teams.map((team: any) => new Team(team)));
+				this.roles.next(temp.user.roles.map((rol: any) => new Rol(rol)));
+
+				this.activeTeam.next(this.teams.value[0]);
+				this.activeRoles.next(this.roles.value.filter((rol: Rol) => {
+					return rol.teamId == temp.user.teams[0].id;
+				}))
 
 				this.isLogin.next(true);
 

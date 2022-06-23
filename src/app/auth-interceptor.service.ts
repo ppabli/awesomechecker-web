@@ -1,17 +1,18 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
+import { UserService } from './user.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
 
-	constructor(private router: Router, private snackBar: MatSnackBar, private localStorageService: LocalStorageService, private apiService: ApiService) {
+	constructor(private router: Router, private userService: UserService, private snackBar: MatSnackBar, private localStorageService: LocalStorageService, private apiService: ApiService) {
 
 	}
 
@@ -32,6 +33,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
 		let token = localStorage.getItem('token');
+		let selectedTeam = this.userService.activeTeam.value;
 
 		let request = req;
 
@@ -41,6 +43,12 @@ export class AuthInterceptorService implements HttpInterceptor {
 					Authorization: `${token}`
 				}
 			});
+		}
+
+		if (selectedTeam) {
+			request = request.clone({
+				params: (req.params ? req.params : new HttpParams()).append('teamId', selectedTeam.id)
+			})
 		}
 
 		return next.handle(request).pipe(
