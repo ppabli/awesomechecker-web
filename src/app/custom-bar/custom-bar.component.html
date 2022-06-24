@@ -1,28 +1,32 @@
 <div class="row justify-start">
 
-	<button mat-button (click)="changeFormat('table')">
+	<mat-button-toggle-group name="fontStyle" aria-label="Font Style" *ngIf="formatSelector">
 
-		<mat-icon mat-icon [color]="format == 'table' ? 'accent' : ''">table_chart</mat-icon>
+		<mat-button-toggle (click)="changeFormat(formats.table)">
 
-	</button>
+			<mat-icon mat-icon [color]="format == formats.table ? 'accent' : ''">table_chart</mat-icon>
 
-	<button mat-button (click)="changeFormat('card')">
+		</mat-button-toggle>
 
-		<mat-icon mat-icon [color]="format == 'card' ? 'accent' : ''">dashboard</mat-icon>
+		<mat-button-toggle mat-button (click)="changeFormat(formats.card)">
 
-	</button>
+			<mat-icon mat-icon [color]="format == formats.card ? 'accent' : ''">dashboard</mat-icon>
 
-	<mat-form-field class="example-full-width" appearance="standard" color="accent">
-		<input matInput [value]="searchText" (keyup)="changeSearchValue($event)" placeholder="Search">
-		<mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+		</mat-button-toggle>
+
+	</mat-button-toggle-group>
+
+	<mat-form-field class="example-full-width" appearance="standard" color="accent" *ngIf="searchBar">
+		<input matInput (keyup)="changeSearchValue($event)" placeholder="Search">
+		<mat-icon matSuffix>search</mat-icon>
 	</mat-form-field>
 
 	<span class="spacer"></span>
 
-	<mat-paginator class="bg-grey" [length]="dataLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizes"
+	<mat-paginator *ngIf="paginator" class="bg-transparent" [length]="data.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizes"
 		color="accent" aria-label="Select page"></mat-paginator>
 
-	<button mat-button *ngIf="canCreate">
+	<button mat-button *ngIf="createButton && canCreate">
 
 		<mat-icon mat-icon color="accent" routerLink="/products/create">add</mat-icon>
 

@@ -24,7 +24,8 @@ export class SidenavMenuComponent implements OnInit {
 			path: '/products',
 			icon: 'waves',
 			required: {
-				isLogin: true
+				isLogin: true,
+				rolGet: true
 			}
 		}
 	];
@@ -41,6 +42,11 @@ export class SidenavMenuComponent implements OnInit {
 		let isVisible = true;
 		if (link.required) {
 			isVisible = isVisible && link.required.isLogin === this.isLogin;
+			if (link.required.rolGet) {
+				isVisible = isVisible && this.userService.activeRoles.value.filter(rol => {
+					return rol.getGetPermissions()[link.path.split('/')[1]]
+				}).length != 0;
+			}
 		}
 		return isVisible;
 	}

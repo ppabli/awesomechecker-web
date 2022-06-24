@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { LocalStorageService } from './local-storage.service';
 import { Rol } from './rol.model';
-import { SidenavService } from './sidenav.service';
 import { Team } from './team.model';
 import { User } from './user.model';
 
@@ -32,15 +31,54 @@ export class UserService {
 	private _activeRoles: Rol[] = [];
 	activeRoles = new BehaviorSubject<Rol[]>(this._activeRoles);
 
-	constructor(private apiService: ApiService, private localStorageService: LocalStorageService, private snackBar: MatSnackBar, private router: Router, private sideBar: SidenavService) {
+	private _canGet: boolean = false;
+	canGet = new BehaviorSubject<boolean>(this._canGet);
 
+	private _canPost: boolean = false;
+	canPost = new BehaviorSubject<boolean>(this._canPost);
+
+	private _canPut: boolean = false;
+	canPut = new BehaviorSubject<boolean>(this._canPut);
+
+	private _canDelete: boolean = false;
+	canDelete = new BehaviorSubject<boolean>(this._canDelete);
+
+	constructor(private apiService: ApiService, private localStorageService: LocalStorageService, private snackBar: MatSnackBar, private router: Router) {
+
+	}
+
+	updateActions() {
+		let getRoles = [];
+		let putRoles = [];
+		let postRoles = [];
+		let deleteRoles = [];
+		let url = this.router.url.split("/")[1];
+		for (let rol of this.activeRoles.value) {
+			if (rol.getGetPermissions()[url] == true) {
+				getRoles.push(rol)
+			}
+			if (rol.getPostPermissions()[url] == true) {
+				postRoles.push(rol);
+			}
+			if (rol.getPutPermissions()[url] == true) {
+				putRoles.push(rol);
+			}
+			if (rol.getDeletePermissions()[url] == true) {
+				deleteRoles.push(rol);
+			}
+		}
+		this.canGet.next(getRoles.length != 0 ? true : false)
+		this.canPost.next(postRoles.length != 0 ? true : false)
+		this.canPut.next(putRoles.length != 0 ? true : false)
+		this.canDelete.next(deleteRoles.length != 0 ? true : false)
 	}
 
 	changeTeam(team: Team) {
 		this.activeTeam.next(team);
-		this.activeRoles.next(this.roles.value.filter((rol: Rol) => {
+		let newRoles = this.roles.value.filter((rol: Rol) => {
 			return rol.teamId == team.id;
-		}))
+		})
+		this.activeRoles.next(newRoles);
 		this.localStorageService.setItem('activeTeam', team.name);
 	}
 
@@ -94,8 +132,6 @@ export class UserService {
 		this.snackBar.open('Session done!', '', {
 			duration: 1500,
 		});
-
-		this.sideBar.close();
 
 		this.router.navigate(['/']);
 

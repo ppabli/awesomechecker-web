@@ -6,7 +6,6 @@ export class Rol extends Base {
 	description: string;
 	token: string;
 	teamId: number;
-	staffRol: boolean;
 	// Permissions
 	teamAdmin: boolean;
 	canGetUsers: boolean;
@@ -97,15 +96,15 @@ export class Rol extends Base {
 
 		return {
 
-			'user': this.canEditUser,
-			'team': this.canEditTeam,
-			'data': this.canEditRol,
-			'category': this.canEditCategory,
-			'page': this.canEditPage,
-			'product': this.canEditProduct,
-			'productPage': this.canEditProductPage,
-			'review': this.canEditReview,
-			'reviewAttribute': this.canEditReviewAttribute,
+			'users': this.canEditUser,
+			'teams': this.canEditTeam,
+			'datas': this.canEditRol,
+			'categories': this.canEditCategory,
+			'pages': this.canEditPage,
+			'products': this.canEditProduct,
+			'productPages': this.canEditProductPage,
+			'reviews': this.canEditReview,
+			'reviewAttributes': this.canEditReviewAttribute,
 
 		};
 

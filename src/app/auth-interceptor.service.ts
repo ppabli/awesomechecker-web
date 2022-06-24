@@ -45,7 +45,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 			});
 		}
 
-		if (selectedTeam) {
+		if (selectedTeam && selectedTeam.name != 'Admin team') {
 			request = request.clone({
 				params: (req.params ? req.params : new HttpParams()).append('teamId', selectedTeam.id)
 			})

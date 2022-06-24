@@ -1,19 +1,16 @@
 import { Base } from "./base.model";
-import { Category } from "./category.model";
 import { Team } from "./team.model";
 
-export class Product extends Base {
-
+export class Category extends Base {
 	name: string;
 	description: string;
-	teamId: number;
-	categoryId: number;
-
+	teamId: number
+	team: Team;
 	constructor(data: any) {
 		super(data);
 		this.name = data.name;
 		this.description = data.description;
 		this.teamId = data.teamId;
-		this.categoryId = data.categoryId;
+		this.team = new Team(data.team);
 	}
 }

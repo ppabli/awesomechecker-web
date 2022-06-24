@@ -1,0 +1,85 @@
+<ng-container *ngIf="loading">
+
+	<app-loading></app-loading>
+
+</ng-container>
+
+<ng-container *ngIf="!loading">
+
+	<div class="row">
+
+		<div class="delears">
+
+			<mat-list role="list">
+				<ng-container *ngFor="let producPage of productPages">
+					<mat-list-item>
+						<button type="button" (click)="navigate(producPage.url)" color="accent" mat-stroked-button>{{
+							getFileName(producPage.url) }}</button>
+					</mat-list-item>
+				</ng-container>
+			</mat-list>
+
+		</div>
+
+	</div>
+
+	<mat-accordion>
+
+		<mat-expansion-panel (opened)="loadReviews()" (closed)="!panelOpenState">
+
+			<mat-expansion-panel-header>
+
+				<mat-panel-title>Reviews</mat-panel-title>
+				<mat-panel-description>Description</mat-panel-description>
+
+			</mat-expansion-panel-header>
+
+			<div>
+
+				<ng-container *ngIf="loadingReviews">
+
+					<app-loading></app-loading>
+
+				</ng-container>
+
+				<ng-container *ngIf="!loadingReviews">
+
+					<app-custom-bar class="bg-correct"></app-custom-bar>
+
+					<app-table></app-table>
+
+				</ng-container>
+
+			</div>
+
+		</mat-expansion-panel>
+
+		<mat-expansion-panel (opened)="panelOpenState" (closed)="!panelOpenState">
+
+			<mat-expansion-panel-header>
+
+				<mat-panel-title>Reviews</mat-panel-title>
+				<mat-panel-description>Description</mat-panel-description>
+
+			</mat-expansion-panel-header>
+
+			<h1>Content</h1>
+
+		</mat-expansion-panel>
+
+		<mat-expansion-panel (opened)="panelOpenState" (closed)="!panelOpenState">
+
+			<mat-expansion-panel-header>
+
+				<mat-panel-title>Reviews</mat-panel-title>
+				<mat-panel-description>Description</mat-panel-description>
+
+			</mat-expansion-panel-header>
+
+			<h1>Content</h1>
+
+		</mat-expansion-panel>
+
+	</mat-accordion>
+
+</ng-container>

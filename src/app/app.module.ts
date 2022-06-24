@@ -42,6 +42,11 @@ import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
 import { SidenavService } from './sidenav.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LoadingComponent } from './loading/loading.component';
+import { ProductDetailPageComponent } from './product-detail-page/product-detail-page.component';
+import { ProductEditPageComponent } from './product-edit-page/product-edit-page.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { TableComponent } from './table/table.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,7 +65,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ErrorPageComponent,
 		ProductsPageComponent,
 		CustomBarComponent,
-  LoadingComponent
+		LoadingComponent,
+		ProductDetailPageComponent,
+		ProductEditPageComponent,
+  TableComponent
 	],
 	imports: [
 		ReactiveFormsModule,
@@ -87,8 +95,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 		MatCheckboxModule,
 		MatTableModule,
 		MatMenuModule,
+		MatButtonToggleModule,
 		MatPaginatorModule,
 		MatSortModule,
+		MatExpansionModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

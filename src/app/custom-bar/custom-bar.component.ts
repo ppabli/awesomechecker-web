@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomBarService } from '../custom-bar.service';
-import { Rol } from '../rol.model';
+import { CustomBarService, FormatType } from '../custom-bar.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -11,41 +10,40 @@ import { UserService } from '../user.service';
 })
 export class CustomBarComponent implements OnInit {
 
-	@Input('length') length: number;
+	@Input('formatSelector') formatSelector: boolean = false
+	@Input('searchBar') searchBar: boolean = false
+	@Input('createButton') createButton: boolean = false
+	@Input('paginator') paginator: boolean = false
 
-	format: string;
-	searchText: string
+	formats = FormatType;
+
+	format: FormatType;
 
 	pageSize: number = 10;
 	pageSizes: number[] = [5, 10, 25, 100]
 
-	dataLength: number;
+	data: any[] = [];
+	canCreate: boolean
 
-	canCreate: boolean = false;
-
-	constructor(private customBarservice: CustomBarService, private userService: UserService, private router: Router) { }
-
-	ngOnInit(): void {
-
+	constructor(private customBarservice: CustomBarService, private userService: UserService) {
 		this.customBarservice.format.subscribe(newFormat => this.format = newFormat);
-		this.customBarservice.searchValue.subscribe(newSearchValue => this.searchText = newSearchValue);
-		this.customBarservice.dataLength.subscribe(newDataLength => this.dataLength = newDataLength);
-		this.userService.activeRoles.subscribe((roles: Rol[]) => {
-			let url = this.router.url.split("/")[1];
-			let validRoles = roles.filter((rol: Rol) => {
-				return rol.getPostPermissions()[url];
-			})
-			if (validRoles.length) {
-				this.canCreate = true;
-			}
+		this.customBarservice.data.subscribe(newData => {
+			this.data = newData;
 		})
-
+		this.userService.canPost.subscribe(value => {
+			this.canCreate = value
+		})
 	}
 
-	changeFormat(newMode: string) {
+	ngOnInit(): void {
+		this.customBarservice.format.subscribe(newFormat => this.format = newFormat);
+		this.userService.canPost.subscribe(value => {
+			this.canCreate = value
+		})
+	}
 
+	changeFormat(newMode: FormatType) {
 		this.customBarservice.format.next(newMode);
-
 	}
 
 	changeSearchValue(event: any) {

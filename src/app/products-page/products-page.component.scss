@@ -4,7 +4,10 @@
 	cursor: pointer;
 }
 
+.div-table {
+	overflow: scroll !important;
+}
+
 table {
 	width: 100%;
-	overflow: scroll;
 }

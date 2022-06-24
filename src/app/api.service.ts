@@ -19,7 +19,7 @@ export class ApiService {
 
 	private defaultTime: number = 1;
 
-	constructor(private http: HttpClient, private snackBar: MatSnackBar, private localStorageService: LocalStorageService,) {
+	constructor(private http: HttpClient) {
 
 	}
 
@@ -41,6 +41,10 @@ export class ApiService {
 
 	post(url: string, data: any) {
 		return this.http.post(this.fullUrl() + url, data);
+	}
+
+	delete(url: string) {
+		return this.http.delete(this.fullUrl() + url);
 	}
 
 }
